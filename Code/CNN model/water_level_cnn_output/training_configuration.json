@@ -1,0 +1,11 @@
+{
+  "image_size": 720,
+  "batch_size": 8,
+  "max_epochs": 100,
+  "learning_rate": 0.001,
+  "validation_fraction": 0.2,
+  "early_stopping_patience": 28,
+  "huber_delta_ft": 0.3,
+  "random_seed": 42,
+  "max_time_difference_minutes": 10.0
+}

@@ -1,0 +1,1 @@
+openExample('raspberrypiio/GettingStartedWithMATLABSPKGRaspberryPiHardwareExample')

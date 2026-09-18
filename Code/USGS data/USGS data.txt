@@ -1,0 +1,62 @@
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np  # 👈 for arange
+
+# ---- SETTINGS ----
+site = "02169506"      # Rocky Branch at Whaley St, Columbia SC
+parameter = "00065"    # Gage height (stage), feet
+
+start = "2025-12-04T17:15:00-05:00"  # Start datetime
+end   = "2025-12-05T13:30:00-05:00"  # End datetime
+
+url = "https://waterservices.usgs.gov/nwis/iv/"
+
+params = {
+    "format": "json",
+    "sites": site,
+    "parameterCd": parameter,
+    "startDT": start,
+    "endDT": end,
+    "siteStatus": "all"
+}
+
+# ---- DOWNLOAD DATA ----
+response = requests.get(url, params=params)
+response.raise_for_status()
+data = response.json()
+
+ts = data["value"]["timeSeries"][0]
+values = ts["values"][0]["value"]
+
+# ---- BUILD A DATAFRAME ----
+df = pd.DataFrame(values)
+df["dateTime"] = pd.to_datetime(df["dateTime"])
+df["value"] = pd.to_numeric(df["value"])
+df.set_index("dateTime", inplace=True)
+
+# ---- RESAMPLE TO 15-MINUTE INTERVALS ----
+df_15 = df.resample("15T").ffill()
+
+# ---- CREATE "HOURS FROM START" AXIS ----
+start_time = df_15.index[0]
+hours_from_start = (df_15.index - start_time) / pd.Timedelta(hours=1)
+
+# ---- BUILD 1-HOUR TICKS ----
+max_hour = hours_from_start.max()
+xticks = np.arange(0, np.floor(max_hour) + 1, 1)  # 0, 1, 2, ..., N hours
+
+# ---- PLOT ----
+plt.figure(figsize=(10, 5))
+plt.plot(hours_from_start, df_15["value"], linewidth=2)
+
+plt.xlabel("Hours from start")
+plt.ylabel("Stage (ft)")
+plt.title("USGS 02169506 Rocky Branch (Whaley St)\nStage Height (15‑min intervals)")
+plt.grid(True)
+
+# 👇 Set ticks every 1 hour
+plt.xticks(xticks)
+
+plt.tight_layout()
+plt.show()

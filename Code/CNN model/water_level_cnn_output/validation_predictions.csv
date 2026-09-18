@@ -1,0 +1,5 @@
+image_path,actual_usgs_level_ft,predicted_level_ft,absolute_error_ft
+C:\Users\tranp\OneDrive\Desktop\ARTS lab\In_Situ_Vision_Based_Water_Height_Sensor\Images\training images\20260902_103000.png,1.1200000000021493,1.1210414640440678,0.0010414640419185162
+C:\Users\tranp\OneDrive\Desktop\ARTS lab\In_Situ_Vision_Based_Water_Height_Sensor\Images\training images\20260909_120147.png,1.1300000000114625,1.122543565586496,0.007456434424966574
+C:\Users\tranp\OneDrive\Desktop\ARTS lab\In_Situ_Vision_Based_Water_Height_Sensor\Images\training images\20260831_110000.png,1.1200000000021493,1.1211253911092018,0.0011253911070525646
+C:\Users\tranp\OneDrive\Desktop\ARTS lab\In_Situ_Vision_Based_Water_Height_Sensor\Images\training images\20260831_163000.png,1.1100000004584973,1.1160437082939854,0.006043707835488021
